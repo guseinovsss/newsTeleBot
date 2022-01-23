@@ -2,10 +2,19 @@
 import telebot
 from bs4 import BeautifulSoup
 import requests
+from telepot.loop import MessageLoop
+import re
 
-
-#токен теле бота
+# токен теле бота
 bot = telebot.TeleBot('1742310134:AAE_szafX_AUqtECbgVIr0u-OVyKbXSE8J4')
+
+
+
+# @bot.message_handler(commands = ['r'])
+# def news1(message):
+# 	vah = message
+#  	result = re.match(r'text*[^\n]', str(vah))
+# 	bot.send_message(message.chat.id, vah)
 
 
 @bot.message_handler(commands = ['ria'])#декоратор с помощью которого наш бот будет реагировать на команду
@@ -100,25 +109,33 @@ def news(message):
 		txt = str(i + 1) + ') ' + texts[i].text
 		bot.send_message(message.chat.id, '<a href="{}">{}</a>'.format(texts[i]['href'], txt), parse_mode = 'html')
 
-@bot.message_handler(commands = ['findnews'])
-def news(message):
-	bot.send_message(message.chat.id, 'в разработке')
 
- 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['/findforhashtag'])
+def start_message(message):
+    bot.send_message(message.chat.id, '', reply_markup=keyboard)
+
+
+@bot.message_handler(commands=['start','back'])
+def start_message(message):
+    keyboard = telebot.types.ReplyKeyboardMarkup(True)
+    keyboard.row('/resours','/byVIP')
+    keyboard.row('/findforhashtag','/help')
+
+    bot.send_message(message.chat.id, 'выбери сайт', reply_markup=keyboard)
+
+@bot.message_handler(commands=['resours'])
 def start_message(message):
     keyboard = telebot.types.ReplyKeyboardMarkup(True)
     keyboard.row('/rbk', '/mailru','/vottak')
     keyboard.row('/rbkNewspaper', '/ria','/rbcTrends')
-    keyboard.row('/help')
+    keyboard.row('/back')
     bot.send_message(message.chat.id, 'выбери сайт', reply_markup=keyboard)
     
 @bot.message_handler(commands=['help'])
 def start_message(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(True)
-    keyboard.row('/rbk', '/mailru','/vottak')
-    keyboard.row('/rbkNewspaper', '/ria','/rbcTrends')
-    bot.send_message(message.chat.id, 'выбери сайт', reply_markup=keyboard)
-# SAID 
+
+    bot.send_message(message.chat.id, '', reply_markup=keyboard)
+# SAID is programmer
+
 
 bot.polling(none_stop = True) 
