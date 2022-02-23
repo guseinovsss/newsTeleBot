@@ -1,7 +1,7 @@
 # #импорт библиотек
-# import telebot
 # from bs4 import BeautifulSoup
 # import requests
+# import telebot
 
 # # токен теле бота
 # bot = telebot.TeleBot('1742310134:AAE_szafX_AUqtECbgVIr0u-OVyKbXSE8J4')
